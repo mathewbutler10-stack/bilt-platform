@@ -1,0 +1,13 @@
+{
+  "name": "bilt-auth-setup",
+  "version": "1.0.0",
+  "description": "Script to create demo users in Supabase Auth for BILT Platform",
+  "main": "create-auth-users.js",
+  "scripts": {
+    "create-users": "node create-auth-users.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "dotenv": "^16.0.0"
+  }
+}

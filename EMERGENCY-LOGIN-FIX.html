@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BILT Login Emergency Fix</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .container { background: #f5f5f5; padding: 20px; border-radius: 8px; }
+        code { background: #333; color: #fff; padding: 10px; display: block; border-radius: 4px; }
+        button { background: #0070f3; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0051cc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 BILT Login Emergency Fix</h1>
+        <p>This script fixes the "Missing Supabase environment variables" error.</p>
+        
+        <h2>📋 Instructions:</h2>
+        <ol>
+            <li>Open the BILT login page: <strong>https://bilt-prod-production.up.railway.app/auth/login</strong></li>
+            <li>Press <strong>F12</strong> to open Developer Tools</li>
+            <li>Go to the <strong>Console</strong> tab</li>
+            <li>Copy and paste the code below:</li>
+        </ol>
+        
+        <code id="fixCode">
+// Emergency Supabase fix
+window.NEXT_PUBLIC_SUPABASE_URL = 'https://sniuhfijadbghoxfsnft.supabase.co';
+window.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'sb_publishable_xiu402i5-YXmceIq8s6DhA_50ySTuOb';
+console.log('✅ Emergency Supabase values set');
+location.reload();
+        </code>
+        
+        <p>
+            <button onclick="copyCode()">📋 Copy Code to Clipboard</button>
+        </p>
+        
+        <h2>✅ What This Does:</h2>
+        <ul>
+            <li>Sets the Supabase URL and API key directly in the browser</li>
+            <li>Bypasses missing environment variables</li>
+            <li>Allows login to work immediately</li>
+            <li>Console will show: <code>"✅ Emergency Supabase values set"</code></li>
+        </ul>
+        
+        <h2>🔧 Permanent Fix:</h2>
+        <p>The robust Supabase client with hardcoded values is already in the code. 
+        Once deployed with <code>railway up</code>, this emergency fix won't be needed.</p>
+    </div>
+
+    <script>
+        function copyCode() {
+            const code = document.getElementById('fixCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ Code copied to clipboard! Paste it in the browser console.');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 249, 250, 251;
+  --background-end-rgb: 255, 255, 255;
+  --primary: 0, 102, 255;    /* #0066FF */
+  --secondary: 0, 200, 83;   /* #00C853 */
+  --accent: 255, 107, 53;    /* #FF6B35 */
+  --success: 0, 200, 83;     /* #00C853 */
+  --warning: 255, 193, 7;    /* #FFC107 */
+  --danger: 244, 67, 54;     /* #F44336 */
+  --gray-50: 249, 250, 251;  /* #F9FAFB */
+  --gray-100: 243, 244, 246; /* #F3F4F6 */
+  --gray-200: 229, 231, 235; /* #E5E7EB */
+  --gray-300: 209, 213, 219; /* #D1D5DB */
+  --gray-400: 156, 163, 175; /* #9CA3AF */
+  --gray-500: 107, 114, 128; /* #6B7280 */
+  --gray-600: 75, 85, 99;    /* #4B5563 */
+  --gray-700: 55, 65, 81;    /* #374151 */
+  --gray-800: 31, 41, 55;    /* #1F2937 */
+  --gray-900: 17, 24, 39;    /* #111827 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 17, 24, 39;
+    --background-end-rgb: 31, 41, 55;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+  font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--gray-100));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--gray-400));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--gray-500));
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(var(--primary), 0.2);
+  color: rgb(var(--primary));
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid rgb(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .text-primary {
+    color: rgb(var(--primary));
+  }
+  
+  .bg-primary {
+    background-color: rgb(var(--primary));
+  }
+  
+  .border-primary {
+    border-color: rgb(var(--primary));
+  }
+  
+  .text-secondary {
+    color: rgb(var(--secondary));
+  }
+  
+  .bg-secondary {
+    background-color: rgb(var(--secondary));
+  }
+  
+  .border-secondary {
+    border-color: rgb(var(--secondary));
+  }
+  
+  .text-accent {
+    color: rgb(var(--accent));
+  }
+  
+  .bg-accent {
+    background-color: rgb(var(--accent));
+  }
+  
+  .border-accent {
+    border-color: rgb(var(--accent));
+  }
+  
+  .gradient-primary {
+    background: linear-gradient(135deg, rgb(var(--primary)), rgb(var(--secondary)));
+  }
+  
+  .gradient-accent {
+    background: linear-gradient(135deg, rgb(var(--accent)), rgb(var(--primary)));
+  }
+  
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+  
+  .card-hover:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+  }
+  
+  .btn-primary {
+    background-color: rgb(var(--primary));
+    color: white;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+  
+  .btn-primary:active {
+    transform: scale(0.95);
+  }
+  
+  .btn-secondary {
+    background-color: rgb(var(--secondary));
+    color: white;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-secondary:hover {
+    opacity: 0.9;
+  }
+  
+  .btn-secondary:active {
+    transform: scale(0.95);
+  }
+  
+  .btn-accent {
+    background-color: rgb(var(--accent));
+    color: white;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-accent:hover {
+    opacity: 0.9;
+  }
+  
+  .btn-accent:active {
+    transform: scale(0.95);
+  }
+  
+  .btn-outline {
+    border: 2px solid rgb(var(--primary));
+    color: rgb(var(--primary));
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-outline:hover {
+    background-color: rgb(var(--primary));
+    color: white;
+  }
+  
+  .btn-outline:active {
+    transform: scale(0.95);
+  }
+}

@@ -1,0 +1,52 @@
+BILT PLATFORM - DEMO LOGIN CREDENTIALS
+========================================
+
+ALL ACCOUNTS USE PASSWORD: password123
+
+1. PLATFORM OWNER (Full System Access)
+   Email: owner@bilt.com
+   Password: password123
+   Role: Owner
+   Access: Full platform management, multi-gym oversight
+
+2. GYM MANAGER (Local Operations)
+   Email: gym@bilt.com
+   Password: password123
+   Role: Gym Manager
+   Gym: Prime Fitness Sydney
+   Access: Local gym management, member oversight
+
+3. PERSONAL TRAINER (Client Coaching)
+   Email: pt@bilt.com
+   Password: password123
+   Role: Personal Trainer
+   Business: Elite Performance Training
+   Access: Client management, program design, meal planning
+
+4. CLIENT (Training & Nutrition)
+   Email: client@bilt.com
+   Password: password123
+   Role: Client
+   Name: Jamie Smith
+   Access: Personal program, meal plans, progress tracking
+
+CLIENT PROFILE SUMMARY:
+- Age: 35, Female, 165cm, 75kg
+- Goal: Lose 10kg in 3 months
+- Training: Intermediate, 3 days/week, Gym
+- Nutrition: 1,850 kcal/day, Nut allergy
+- Persona: Supporter (friendly, encouraging)
+
+QUICK START:
+1. Run SQL script: scripts/create-demo-accounts.sql
+2. Create auth users with same emails/password
+3. Login at /auth/login with any credentials
+4. Role-specific dashboard loads automatically
+
+TESTING SCENARIOS:
+- PT: Create program, assign meal plan, monitor progress
+- Client: Log workouts, track nutrition, respond to check-ins
+- Gym: Manage members, schedule classes, view analytics
+- Owner: System oversight, revenue tracking, multi-gym management
+
+SECURITY NOTE: Demo credentials only - change for production.

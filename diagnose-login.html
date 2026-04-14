@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BILT Login Diagnostic</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .warning { background-color: #fff3cd; border-color: #ffeaa7; color: #856404; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔍 BILT Login Diagnostic</h1>
+    <p>Run this diagnostic to identify why login isn't working.</p>
+    
+    <div class="test" id="test1">
+        <h3>Test 1: Check Supabase Environment Variables</h3>
+        <button onclick="testEnvVars()">Run Test</button>
+        <div id="result1"></div>
+    </div>
+    
+    <div class="test" id="test2">
+        <h3>Test 2: Test Supabase Connection</h3>
+        <button onclick="testSupabaseConnection()">Run Test</button>
+        <div id="result2"></div>
+    </div>
+    
+    <div class="test" id="test3">
+        <h3>Test 3: Test Authentication</h3>
+        <button onclick="testAuthentication()">Run Test</button>
+        <div id="result3"></div>
+    </div>
+    
+    <div class="test" id="test4">
+        <h3>Test 4: Check Browser Console Errors</h3>
+        <button onclick="checkConsoleErrors()">Run Test</button>
+        <div id="result4"></div>
+    </div>
+    
+    <div id="summary"></div>
+
+    <script>
+        // Test 1: Check environment variables
+        async function testEnvVars() {
+            const result = document.getElementById('result1');
+            result.innerHTML = '<p>Checking environment variables...</p>';
+            
+            try {
+                // Try to access the Supabase client from the BILT app
+                const response = await fetch('/api/health/advanced');
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `<div class="success">
+                        <p>✅ Advanced health endpoint works!</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>`;
+                } else {
+                    result.innerHTML = `<div class="error">
+                        <p>❌ Advanced health endpoint failed (Status: ${response.status})</p>
+                        <p>This suggests Supabase connection is failing.</p>
+                    </div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="error">
+                    <p>❌ Cannot access advanced health endpoint:</p>
+                    <pre>${error.message}</pre>
+                </div>`;
+            }
+        }
+        
+        // Test 2: Test Supabase connection directly
+        async function testSupabaseConnection() {
+            const result = document.getElementById('result2');
+            result.innerHTML = '<p>Testing Supabase connection...</p>';
+            
+            try {
+                // Try to connect to Supabase directly
+                const supabaseUrl = 'https://sniuhfijadbghoxfsnft.supabase.co';
+                const anonKey = 'sb_publishable_xiu402i5-YXmceIq8s6DhA_50ySTuOb';
+                
+                const response = await fetch(`${supabaseUrl}/rest/v1/`, {
+                    headers: {
+                        'apikey': anonKey,
+                        'Authorization': `Bearer ${anonKey}`
+                    }
+                });
+                
+                if (response.status === 401) {
+                    result.innerHTML = `<div class="success">
+                        <p>✅ Supabase is accessible (expected 401 for REST endpoint with anon key)</p>
+                        <p>This means the Supabase project is reachable.</p>
+                    </div>`;
+                } else if (response.ok) {
+                    result.innerHTML = `<div class="success">
+                        <p>✅ Supabase is accessible and working!</p>
+                    </div>`;
+                } else {
+                    result.innerHTML = `<div class="error">
+                        <p>❌ Supabase connection failed (Status: ${response.status})</p>
+                        <p>Check CORS settings in Supabase dashboard.</p>
+                    </div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="error">
+                    <p>❌ Cannot connect to Supabase:</p>
+                    <pre>${error.message}</pre>
+                    <p>Possible CORS issue. Add this domain to Supabase CORS settings:</p>
+                    <pre>${window.location.origin}</pre>
+                </div>`;
+            }
+        }
+        
+        // Test 3: Test authentication
+        async function testAuthentication() {
+            const result = document.getElementById('result3');
+            result.innerHTML = '<p>Testing authentication...</p>';
+            
+            try {
+                const supabaseUrl = 'https://sniuhfijadbghoxfsnft.supabase.co';
+                const anonKey = 'sb_publishable_xiu402i5-YXmceIq8s6DhA_50ySTuOb';
+                
+                const response = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': anonKey,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'owner@bilt.com',
+                        password: 'password123'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `<div class="success">
+                        <p>✅ Authentication works!</p>
+                        <p>User: ${data.user.email}</p>
+                        <p>Token received: ${data.access_token.substring(0, 50)}...</p>
+                        <p><strong>This proves users exist in Supabase Auth and credentials are correct.</strong></p>
+                    </div>`;
+                } else {
+                    result.innerHTML = `<div class="error">
+                        <p>❌ Authentication failed (Status: ${response.status})</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="error">
+                    <p>❌ Authentication test failed:</p>
+                    <pre>${error.message}</pre>
+                </div>`;
+            }
+        }
+        
+        // Test 4: Check browser console
+        function checkConsoleErrors() {
+            const result = document.getElementById('result4');
+            
+            // We can't actually read the console, but we can guide the user
+            result.innerHTML = `<div class="warning">
+                <p>🔍 Manual check needed:</p>
+                <ol>
+                    <li>Open browser Developer Tools (F12)</li>
+                    <li>Go to Console tab</li>
+                    <li>Look for red error messages</li>
+                    <li>Common errors to look for:
+                        <ul>
+                            <li>"Cannot read property 'auth' of null" (Supabase client is null)</li>
+                            <li>"Supabase URL is required" (Missing environment variable)</li>
+                            <li>CORS errors (blocked by Supabase)</li>
+                            <li>JavaScript syntax errors</li>
+                        </ul>
+                    </li>
+                </ol>
+                <p>Take a screenshot of any errors and share them.</p>
+            </div>`;
+        }
+        
+        // Run all tests
+        async function runAllTests() {
+            await testEnvVars();
+            await testSupabaseConnection();
+            await testAuthentication();
+            checkConsoleErrors();
+            
+            document.getElementById('summary').innerHTML = `<div class="test">
+                <h3>📊 Diagnostic Summary</h3>
+                <p>Tests completed. Check each result above.</p>
+                <p><strong>Most likely issue:</strong> Supabase CORS settings or environment variables in Railway.</p>
+                <p><strong>Next steps:</strong></p>
+                <ol>
+                    <li>Check Railway environment variables are set correctly</li>
+                    <li>Add Railway domain to Supabase CORS settings</li>
+                    <li>Check browser console for JavaScript errors</li>
+                </ol>
+            </div>`;
+        }
+        
+        // Auto-run all tests when page loads
+        window.onload = function() {
+            runAllTests();
+        };
+    </script>
+</body>
+</html>
