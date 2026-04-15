@@ -8,6 +8,7 @@ const getSupabaseConfig = () => {
   // REQUIRED environment variables for production
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const usingEnvVars = !!(supabaseUrl && supabaseAnonKey)
   
   // Validate environment variables
   if (!supabaseUrl || !supabaseAnonKey) {
@@ -34,11 +35,12 @@ const getSupabaseConfig = () => {
   
   return {
     supabaseUrl,
-    supabaseAnonKey
+    supabaseAnonKey,
+    usingEnvVars
   }
 }
 
-const { supabaseUrl, supabaseAnonKey } = getSupabaseConfig()
+const { supabaseUrl, supabaseAnonKey, usingEnvVars } = getSupabaseConfig()
 
 // CREATE CLIENT - PRODUCTION-READY WITH MULTI-TENANT SUPPORT
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
