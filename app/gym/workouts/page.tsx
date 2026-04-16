@@ -1,53 +1,11 @@
-'use client'
+// Updated Workouts Page with API Integration
+// Uses real workout API with graceful fallback to mock data
 
-import { useState } from 'react'
-import SidebarNavigation from '@/components/SidebarNavigation'
-import LoadingSkeleton from '@/components/LoadingSkeleton'
-import { EmptyWorkouts } from '@/components/EmptyState'
-import { 
-  Dumbbell,
-  Search,
-  Filter,
-  Plus,
-  Edit,
-  Trash2,
-  Eye,
-  Download,
-  Share2,
-  Star,
-  Clock,
-  Target,
-  Users,
-  BarChart3,
-  ChevronRight,
-  Grid,
-  List
-} from 'lucide-react'
+import WorkoutsWithAPI from './workouts-with-api'
 
 export default function WorkoutsPage() {
-  const [loading, setLoading] = useState(false)
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<string>('all')
-
-  const categories = [
-    { id: 'all', name: 'All Workouts', count: 24 },
-    { id: 'strength', name: 'Strength Training', count: 8 },
-    { id: 'cardio', name: 'Cardio', count: 5 },
-    { id: 'hiit', name: 'HIIT', count: 4 },
-    { id: 'yoga', name: 'Yoga & Mobility', count: 3 },
-    { id: 'recovery', name: 'Recovery', count: 2 },
-    { id: 'custom', name: 'Custom Plans', count: 2 },
-  ]
-
-  const workouts = [
-    {
-      id: 1,
-      name: 'Full Body Strength',
-      category: 'strength',
-      duration: '60 min',
-      difficulty: 'Intermediate',
-      exercises: 12,
+  return <WorkoutsWithAPI />
+}
       rating: 4.8,
       clients: 42,
       description: 'Complete full body workout focusing on compound movements',
